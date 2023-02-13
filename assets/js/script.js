@@ -1,9 +1,7 @@
 var pageNumber = document.getElementById('page-number');
-var contentDiv = $("#content");
-
 
 // totalNumberOfPages will be a concatonation of the book collection
- var totalNumberOfPages = []; 
+var totalNumberOfPages = []; 
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
 //var readingDays = totalNumberOfPages/readingSpeed  
@@ -115,13 +113,10 @@ $(document).ready(function () {  // only begin once page has loaded
                     // hrs per days in each weeks
                     for (var numDays = 1; numDays < 8; numDays++){
                         // assigned how many hours the reader wants to read
-                        console.log("sumOfPages: " + readingDays);
-                        console.log("numDays: " + numDays);
                         var speedPerDay = readingDays/numDays;
                         hrPerDayList.push(speedPerDay.toPrecision(2));
-                        
                     }
-                    // $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
+                    
                     $("#time-frame-content").append
                     (
                         '<p>Read books within a week</p>'
