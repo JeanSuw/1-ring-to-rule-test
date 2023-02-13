@@ -70,12 +70,12 @@ $(document).ready(function () {  // only begin once page has loaded
                         .then(function(data){
                             console.log(data);// it will only appear object
                             console.log(data[isbnKey]);
-                            console.log(data[isbnKey].number_of_pages); // It will show page number 
-                            
+                            console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
+                            console.log("pagination : " + data[isbnKey].pagination);
                             var total = document.createElement('h2'); // create a paragraph
                             
-                            p = data[isbnKey].number_of_pages;
-                            
+                            //p = data[isbnKey].number_of_pages;
+                            p = switchValues(data[isbnKey]);
                             total.textContent = p;
                             totalNumberOfPages.push(p);
                             pageNumber.appendChild(total);
@@ -105,7 +105,7 @@ $(document).ready(function () {  // only begin once page has loaded
                     console.log("outside of for loop" + sumOfPages);
                     // Added all the pages the reader need to read
                     for (var j = 0; j < pageList.length; j++){
-                        sumOfPages += timeFrame;
+                        sumOfPages += timeFrame[j];
                     }
                     // Reading speed calculation
                     var readingDays = sumOfPages/readingSpeed;
@@ -129,7 +129,14 @@ $(document).ready(function () {  // only begin once page has loaded
                         + '<p>1 day: '+ hrPerDayList[hrPerDayList.length-7] + ' hrs </p>'
                     );
                 }
-
+                // Switch keywords for number page value
+                function switchValues(bookISBN){
+                    if (bookISBN.number_of_pages === undefined){
+                        return bookISBN.pagination;
+                    }else{
+                        return bookISBN.number_of_pages;
+                    }
+                }
                 // get ISBN from url
                 function checkISBN(selectedURL){
                     if(selectedURL.includes("ISBN")){
