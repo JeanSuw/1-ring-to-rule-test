@@ -102,7 +102,7 @@ $(document).ready(function () {  // only begin once page has loaded
                         timeFrame.push(parseInt(pageList[i]));
                     }
                     let sumOfPages = Number();
-                    console.log("outside of for loop" + sumOfPages);
+                    
                     // Added all the pages the reader need to read
                     for (var j = 0; j < pageList.length; j++){
                         sumOfPages += timeFrame[j];
@@ -114,7 +114,7 @@ $(document).ready(function () {  // only begin once page has loaded
                     for (var numDays = 1; numDays < 8; numDays++){
                         // assigned how many hours the reader wants to read
                         var speedPerDay = readingDays/numDays;
-                        hrPerDayList.push(speedPerDay.toPrecision(2));
+                        hrPerDayList.push(speedPerDay.toFixed(2));
                     }
                     
                     $("#time-frame-content").append
