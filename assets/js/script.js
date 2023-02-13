@@ -76,11 +76,18 @@ $(document).ready(function () {  // only begin once page has loaded
                             
                             //p = data[isbnKey].number_of_pages;
                             p = switchValues(data[isbnKey]);
-                            total.textContent = p;
-                            totalNumberOfPages.push(p);
+                            
+                            if (p === undefined){
+                                // Edge case:
+                                // Some book will have undefined number page
+                                total.textContent = 0;
+                                totalNumberOfPages.push(0);
+                            }else{
+                                total.textContent = p;
+                                totalNumberOfPages.push(p);
+                            }
                             pageNumber.appendChild(total);
-                            // Edge case:
-                            // Some book will have undefined number page
+                            console.log("p : " + p); // Check for number of page 
                             
                             calculateTimeframe(totalNumberOfPages);
 
@@ -95,7 +102,7 @@ $(document).ready(function () {  // only begin once page has loaded
                     // This loop is for converting undefined value in pageList to 0
                     for (var i = 0; i < pageList.length; i++){
                         if (pageList[i] === undefined){
-                            timeFrame.append(0); // If the book does not have page number add 0 for now
+                            timeFrame.push(0); // If the book does not have page number add 0 for now
                         }
                         console.log("pageList element type is " + pageList[i]);
                         console.log(typeof pageList[i]); // check the type pagelist if we need to convert it to number parseInt()
@@ -133,8 +140,10 @@ $(document).ready(function () {  // only begin once page has loaded
                 function switchValues(bookISBN){
                     if (bookISBN.number_of_pages === undefined){
                         return bookISBN.pagination;
-                    }else{
+                    }else if (bookISBN.pagination === undefined){
                         return bookISBN.number_of_pages;
+                    }else{
+                        return 0;
                     }
                 }
                 // get ISBN from url
