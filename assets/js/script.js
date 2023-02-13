@@ -1,4 +1,5 @@
 var pageNumber = document.getElementById('page-number');
+var contentDiv = $("#content");
 
 
 // totalNumberOfPages will be a concatonation of the book collection
@@ -83,6 +84,7 @@ $(document).ready(function () {  // only begin once page has loaded
                             // Edge case:
                             // Some book will have undefined number page
                             
+                            calculateTimeframe(totalNumberOfPages);
 
                         });
                     console.log(apiUrl)
@@ -90,20 +92,41 @@ $(document).ready(function () {  // only begin once page has loaded
                 
                 function calculateTimeframe(pageList){
                     var timeFrame = [];
+                    var hrPerDayList = [];
                     var sumOfPages = 0;
-                    
                     // This loop is for converting undefined value in pageList to 0
                     for (var i = 0; i < pageList.length; i++){
                         if (pageList[i] === undefined){
-                            timeFrame[i] == 0; // If the book does not have page number add 0 for now
+                            timeFrame.append(0); // If the book does not have page number add 0 for now
                         }
-                        timeFrame.push(pageList[i]);
-
+                        console.log("pageList element type is " + pageList[i]);
+                        console.log(typeof pageList[i]); // check the type pagelist if we need to convert it to number parseInt()
+                        timeFrame.push(parseInt(pageList[i]));
                     }
 
+                    // Added all the pages the reader need to read
                     for (var j = 0; j < pageList.length; j++){
-                        sumOfPages += timeFrame[i];
+                        sumOfPages = sumOfPages + timeFrame[i];
                     }
+                    
+                    // hrs per days in each weeks
+                    for (var numDays = 1; numDays < 8; numDays++){
+                        // assigned how many hours the reader wants to read
+                        hrPerDayList[numDays-1] = sumOfPages/numDays;
+                    }
+                    // $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
+                    $("#content").append
+                    (
+                        '<p>Read books within a week</p>'
+                        + '<p>7 days: '+ hrPerDayList[hrPerDayList.length-1] + 'hrs </p>'
+                        + '<p>6 days: '+ hrPerDayList[hrPerDayList.length-2] + 'hrs </p>'
+                        + '<p>5 days: '+ hrPerDayList[hrPerDayList.length-3] + 'hrs </p>'
+                        + '<p>4 days: '+ hrPerDayList[hrPerDayList.length-4] + 'hrs </p>'
+                        + '<p>3 days: '+ hrPerDayList[hrPerDayList.length-5] + 'hrs </p>'
+                        + '<p>2 days: '+ hrPerDayList[hrPerDayList.length-6] + 'hrs </p>'
+                        + '<p>1 day: '+ hrPerDayList[hrPerDayList.length-7] + 'hrs </p>'
+                    );
+
 
                 }
 
