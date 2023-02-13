@@ -3,7 +3,7 @@ var contentDiv = $("#content");
 
 
 // totalNumberOfPages will be a concatonation of the book collection
-var totalNumberOfPages = [];
+ var totalNumberOfPages = []; 
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
 //var readingDays = totalNumberOfPages/readingSpeed  
@@ -117,23 +117,22 @@ $(document).ready(function () {  // only begin once page has loaded
                         // assigned how many hours the reader wants to read
                         console.log("sumOfPages: " + readingDays);
                         console.log("numDays: " + numDays);
-                        hrPerDayList.push(readingDays/numDays);
+                        var speedPerDay = readingDays/numDays;
+                        hrPerDayList.push(speedPerDay.toPrecision(2));
                         
                     }
                     // $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
                     $("#time-frame-content").append
                     (
                         '<p>Read books within a week</p>'
-                        + '<p>7 days: '+ hrPerDayList[hrPerDayList.length-1] + 'hrs </p>'
-                        + '<p>6 days: '+ hrPerDayList[hrPerDayList.length-2] + 'hrs </p>'
-                        + '<p>5 days: '+ hrPerDayList[hrPerDayList.length-3] + 'hrs </p>'
-                        + '<p>4 days: '+ hrPerDayList[hrPerDayList.length-4] + 'hrs </p>'
-                        + '<p>3 days: '+ hrPerDayList[hrPerDayList.length-5] + 'hrs </p>'
-                        + '<p>2 days: '+ hrPerDayList[hrPerDayList.length-6] + 'hrs </p>'
-                        + '<p>1 day: '+ hrPerDayList[hrPerDayList.length-7] + 'hrs </p>'
+                        + '<p>7 days: '+ hrPerDayList[hrPerDayList.length-1] + ' hrs </p>'
+                        + '<p>6 days: '+ hrPerDayList[hrPerDayList.length-2] + ' hrs </p>'
+                        + '<p>5 days: '+ hrPerDayList[hrPerDayList.length-3] + ' hrs </p>'
+                        + '<p>4 days: '+ hrPerDayList[hrPerDayList.length-4] + ' hrs </p>'
+                        + '<p>3 days: '+ hrPerDayList[hrPerDayList.length-5] + ' hrs </p>'
+                        + '<p>2 days: '+ hrPerDayList[hrPerDayList.length-6] + ' hrs </p>'
+                        + '<p>1 day: '+ hrPerDayList[hrPerDayList.length-7] + ' hrs </p>'
                     );
-
-
                 }
 
                 // get ISBN from url
