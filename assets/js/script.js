@@ -68,10 +68,10 @@ $(document).ready(function () {  // only begin once page has loaded
                         return response.json();
                         })
                         .then(function(data){
-                            console.log(data);// it will only appear object
-                            console.log(data[isbnKey]);
-                            console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
-                            console.log("pagination : " + data[isbnKey].pagination);
+                            //console.log(data);// it will only appear object
+                            //console.log(data[isbnKey]);
+                            //console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
+                            //console.log("pagination : " + data[isbnKey].pagination);
                             var total = document.createElement('h2'); // create a paragraph
                             
                             //p = data[isbnKey].number_of_pages;
@@ -138,7 +138,9 @@ $(document).ready(function () {  // only begin once page has loaded
                 }
                 // Switch keywords for number page value
                 function switchValues(bookISBN){
-                    if (bookISBN.number_of_pages === undefined){
+                    if (bookISBN === undefined){
+                        return 0;
+                    }else if (bookISBN.number_of_pages === undefined){
                         return bookISBN.pagination;
                     }else if (bookISBN.pagination === undefined){
                         return bookISBN.number_of_pages;
