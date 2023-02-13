@@ -69,9 +69,10 @@ $(document).ready(function () {  // only begin once page has loaded
                         })
                         .then(function(data){
                             //console.log(data);// it will only appear object
-                            console.log(data[isbnKey]);
-                            console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
+                            //console.log(data[isbnKey]);
+                            //console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
                             //console.log("pagination : " + data[isbnKey].pagination);
+                            console.log("title : " + data[isbnKey].title);
                             var total = document.createElement('h2'); // create a paragraph
                             
                             //p = data[isbnKey].number_of_pages;
@@ -87,6 +88,7 @@ $(document).ready(function () {  // only begin once page has loaded
                                 totalNumberOfPages.push(p);
                             }
                             pageNumber.appendChild(total);
+                            $("#book-title").append('<h2>'+ data[isbnKey].title +'</h2>');
                             console.log("p : " + p); // Check for number of page 
                             
                             calculateTimeframe(totalNumberOfPages);
