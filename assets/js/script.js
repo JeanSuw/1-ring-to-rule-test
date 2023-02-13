@@ -6,7 +6,7 @@ var contentDiv = $("#content");
 var totalNumberOfPages = [];
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
-var readingDays = totalNumberOfPages/readingSpeed  
+//var readingDays = totalNumberOfPages/readingSpeed  
 // book selection in search
 var selectedBook = $('#txtBookSearch');
 
@@ -93,7 +93,7 @@ $(document).ready(function () {  // only begin once page has loaded
                 function calculateTimeframe(pageList){
                     var timeFrame = [];
                     var hrPerDayList = [];
-                    var sumOfPages = 0;
+                    
                     // This loop is for converting undefined value in pageList to 0
                     for (var i = 0; i < pageList.length; i++){
                         if (pageList[i] === undefined){
@@ -103,19 +103,25 @@ $(document).ready(function () {  // only begin once page has loaded
                         console.log(typeof pageList[i]); // check the type pagelist if we need to convert it to number parseInt()
                         timeFrame.push(parseInt(pageList[i]));
                     }
-
+                    let sumOfPages = Number();
+                    console.log("outside of for loop" + sumOfPages);
                     // Added all the pages the reader need to read
                     for (var j = 0; j < pageList.length; j++){
-                        sumOfPages = sumOfPages + timeFrame[i];
+                        sumOfPages += timeFrame;
                     }
+                    // Reading speed calculation
+                    var readingDays = sumOfPages/readingSpeed;
                     
                     // hrs per days in each weeks
                     for (var numDays = 1; numDays < 8; numDays++){
                         // assigned how many hours the reader wants to read
-                        hrPerDayList[numDays-1] = sumOfPages/numDays;
+                        console.log("sumOfPages: " + readingDays);
+                        console.log("numDays: " + numDays);
+                        hrPerDayList.push(readingDays/numDays);
+                        
                     }
                     // $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
-                    $("#content").append
+                    $("#time-frame-content").append
                     (
                         '<p>Read books within a week</p>'
                         + '<p>7 days: '+ hrPerDayList[hrPerDayList.length-1] + 'hrs </p>'
