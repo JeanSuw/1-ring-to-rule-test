@@ -74,7 +74,7 @@ $(document).ready(function () {  // only begin once page has loaded
                         return response.json();
                         })
                         .then(function(data){
-                            // Jean's version
+                            // Jay's and Jean's code fusion
                             var rowHTML;
                             var pageNumber = $('#page-number');
                             var bookISBN = data[isbnKey];
