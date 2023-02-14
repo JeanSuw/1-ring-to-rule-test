@@ -1,8 +1,15 @@
+// Darryll
+var bookInput = document.querySelector("#book-text");
+var bookList = document.querySelector("#book-list");
+var bookCountSpan = document.querySelector("#book-count");
+var books = [];
+
 //var pageNumber = document.getElementById('page-number');
 var pageNumber = $('#page-number');
 
 // totalNumberOfPages will be a concatonation of the book collection
 var totalNumberOfPages = [];
+var numberOfPages = 0; // assign new value when either number_of_Pages or Pagination is defined 
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
  
@@ -76,12 +83,16 @@ $(document).ready(function () {  // only begin once page has loaded
                             
                             if (bookISBN.number_of_pages === undefined && bookISBN.pagination === undefined){
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
+                                numberOfPages = 0;
                             }else if(bookISBN.number_of_pages === undefined){
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.pagination + "</td></tr>";
+                                numberOfPages = bookISBN.pagination;
                             }else if (bookISBN.pagination === undefined){
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
+                                numberOfPages = bookISBN.number_of_pages;
                             }else{
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
+                                numberOfPages = 0;
                             }
                             getpokemonImage(); //Bryan's 
                             pageNumber.append(rowHTML);
@@ -135,12 +146,12 @@ $(document).ready(function () {  // only begin once page has loaded
 
                 getPageNumber();
 
-                // var bookText = ui.item.title + numberOfPages
-                // console.log(bookText)
-                // books.push(bookText);
+                var bookText = ui.item.title + numberOfPages;
+                console.log(bookText)
+                books.push(bookText);
                 
-                // storeBooks();
-                // renderBooks();
+                storeBooks();
+                renderBooks();
                 // isbnNum.textContent = "Inside checkISBN: " + selectedURL.substring(42,60);
 
                 console.log(isbnKey);
@@ -162,3 +173,56 @@ $(document).ready(function () {  // only begin once page has loaded
             console.log('pokemon not found', err);
         })
     }
+
+    function renderBooks() {
+        // Clear bookList element and update bookCountSpan
+        bookList.innerHTML = "";
+        bookCountSpan.textContent = books.length;
+      
+        // Render a new li for each book
+        for (var i = 0; i < books.length; i++) {
+          var book = books[i];
+      
+          var li = document.createElement("li");
+          li.textContent = book;
+          li.setAttribute("data-index", i);
+      
+          var button = document.createElement("button");
+          button.textContent = "Delete ❌";
+      
+          li.appendChild(button);
+          bookList.appendChild(li);
+        }
+      }
+      // Calls init to retrieve data and render it to the page on load
+    init()
+    // Add click event to bookList element
+    function init() {
+        // Get stored books from localStorage
+      var storedBooks = JSON.parse(localStorage.getItem("books"));
+    
+      // If books were retrieved from localStorage, update the books array to it
+      if (storedBooks !== null) {
+          books = storedBooks;
+        }   
+        renderBooks();
+    }
+
+    function storeBooks() {
+        // Stringify and set key in localStorage to books array
+      localStorage.setItem("books", JSON.stringify(books));
+    }
+    bookList.addEventListener("click", function(event) {
+        var element = event.target;
+        
+        // Checks if element is a button
+        if (element.matches("button") === true) {
+          // Get its data-index value and remove the book element from the list
+          var index = element.parentElement.getAttribute("data-index");
+          books.splice(index, 1);
+          
+          // Store updated books in localStorage, re-render the list
+          storeBooks();
+          renderBooks();
+        }
+    });
