@@ -1,4 +1,3 @@
-# 1-project-to-rule-test
 # Bookworms
 
 ## Description
