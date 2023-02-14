@@ -1,5 +1,5 @@
-var pageNumber = document.getElementById('page-number');
-
+//var pageNumber = document.getElementById('page-number');
+var pageNumber = $('#page-number');
 
 // totalNumberOfPages will be a concatonation of the book collection
 var totalNumberOfPages = [];
@@ -62,6 +62,7 @@ $(document).ready(function () {  // only begin once page has loaded
                 var isbnKey = "ISBN:"+ String(ui.item.isbn[0].identifier);
                 var getPageNumber = function(){
                     var apiUrl = "https://openlibrary.org/api/books?bibkeys="+isbnKey+"&jscmd=data&format=json";
+                    
                     fetch(apiUrl)
                     
                     .then(function(response){
@@ -72,18 +73,18 @@ $(document).ready(function () {  // only begin once page has loaded
                             var rowHTML;
                             var pageNumber = $('#page-number');
                             var bookISBN = data[isbnKey];
-
+                            
                             if (bookISBN.number_of_pages === undefined && bookISBN.pagination === undefined){
-                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + 0 + "</td></tr>";
+                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
                             }else if(bookISBN.number_of_pages === undefined){
-                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + data[isbnKey].pagination + "</td></tr>";
+                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.pagination + "</td></tr>";
                             }else if (bookISBN.pagination === undefined){
-                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
+                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>derp";
                             }else{
-                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + 0 + "</td></tr>";
+                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
                             }
+                            getpokemonImage(); //Bryan's 
                             pageNumber.append(rowHTML);
-
                             calculateTimeframe(totalNumberOfPages);
                         });
                     console.log(apiUrl)
@@ -132,9 +133,29 @@ $(document).ready(function () {  // only begin once page has loaded
                 }
 
                 getPageNumber();
+
+                // var bookText = ui.item.title + numberOfPages
+                // console.log(bookText)
+                // books.push(bookText);
+                
+                // storeBooks();
+                // renderBooks();
+                // isbnNum.textContent = "Inside checkISBN: " + selectedURL.substring(42,60);
+
                 console.log(isbnKey);
             },
             minLength: 5 // set minimum length of text the user must enter
         });
     });  
-   
+
+    function getpokemonImage() {
+        fetch('https://pokeapi.co/api/v2/pokemon/ditto').then((response) => response.json()).then((data) => {
+            console.log(data);
+            var pokeimage = document.createElement('img');
+            pokeimage.src = data.sprites.front_default;
+            console.log (data.sprites.front_default);
+            document.querySelector("#pokemonImage").append(pokeimage)
+        }).catch((err) => {
+            console.log('pokemon not found', err);
+        })
+    }
