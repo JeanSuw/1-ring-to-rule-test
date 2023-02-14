@@ -79,12 +79,13 @@ $(document).ready(function () {  // only begin once page has loaded
                             }else if(bookISBN.number_of_pages === undefined){
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.pagination + "</td></tr>";
                             }else if (bookISBN.pagination === undefined){
-                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>derp";
+                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
                             }else{
                                 rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
                             }
                             getpokemonImage(); //Bryan's 
                             pageNumber.append(rowHTML);
+                            
                             calculateTimeframe(totalNumberOfPages);
                         });
                     console.log(apiUrl)
@@ -154,7 +155,9 @@ $(document).ready(function () {  // only begin once page has loaded
             var pokeimage = document.createElement('img');
             pokeimage.src = data.sprites.front_default;
             console.log (data.sprites.front_default);
+            
             document.querySelector("#pokemonImage").append(pokeimage)
+            
         }).catch((err) => {
             console.log('pokemon not found', err);
         })
