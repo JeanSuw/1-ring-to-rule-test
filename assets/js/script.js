@@ -5,7 +5,7 @@ var pageNumber = document.getElementById('page-number');
 var totalNumberOfPages = [];
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
-var readingDays = totalNumberOfPages/readingSpeed  
+ 
 // book selection in search
 var selectedBook = $('#txtBookSearch');
 
@@ -47,12 +47,6 @@ $(document).ready(function () {  // only begin once page has loaded
             // what to do when an item is selected
             // first clear anything that may already be in the description
             $('#divDescription').empty();
-            // we get the currently selected item using ui.item
-            // show a pic if we have one
-            // if (item.image != '')
-            // {
-                //     $('#divDescription').append('<img src="' + ui.item.image + '" style="float: left; padding: 10px;">');
-                // }
                 // and title, author, and year
                 $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
                 $('#divDescription').append('<p><b>Author:</b> ' + ui.item.author  + '</p>');
