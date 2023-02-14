@@ -1,10 +1,11 @@
 var pageNumber = document.getElementById('page-number');
 
+
 // totalNumberOfPages will be a concatonation of the book collection
-var totalNumberOfPages = []; 
+var totalNumberOfPages = [];
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
-//var readingDays = totalNumberOfPages/readingSpeed  
+var readingDays = totalNumberOfPages/readingSpeed  
 // book selection in search
 var selectedBook = $('#txtBookSearch');
 
@@ -46,7 +47,12 @@ $(document).ready(function () {  // only begin once page has loaded
             // what to do when an item is selected
             // first clear anything that may already be in the description
             $('#divDescription').empty();
-            
+            // we get the currently selected item using ui.item
+            // show a pic if we have one
+            // if (item.image != '')
+            // {
+                //     $('#divDescription').append('<img src="' + ui.item.image + '" style="float: left; padding: 10px;">');
+                // }
                 // and title, author, and year
                 $('#divDescription').append('<p><b>Title:</b> ' + ui.item.title  + '</p>');
                 $('#divDescription').append('<p><b>Author:</b> ' + ui.item.author  + '</p>');
@@ -68,31 +74,21 @@ $(document).ready(function () {  // only begin once page has loaded
                         return response.json();
                         })
                         .then(function(data){
-                            //console.log(data);// it will only appear object
-                            //console.log(data[isbnKey]);
-                            //console.log("number_of_pages : " +data[isbnKey].number_of_pages); // It will show page number 
-                            //console.log("pagination : " + data[isbnKey].pagination);
-                            console.log("title : " + data[isbnKey].title);
-                            var total = document.createElement('h2'); // create a paragraph
-                            
-                            //p = data[isbnKey].number_of_pages;
-                            p = switchValues(data[isbnKey]);
-                            
-                            if (p === undefined){
-                                // Edge case:
-                                // Some book will have undefined number page
-                                total.textContent = 0;
-                                totalNumberOfPages.push(0);
-                            }else{
-                                total.textContent = p;
-                                totalNumberOfPages.push(p);
-                            }
-                            pageNumber.appendChild(total);
-                            $("#book-title").append('<h2>'+ data[isbnKey].title +'</h2>');
-                            console.log("p : " + p); // Check for number of page 
-                            
-                            calculateTimeframe(totalNumberOfPages);
+                            // Jean's version
+                            var rowHTML;
+                            var pageNumber = $('#page-number');
+                            var bookISBN = data[isbnKey];
 
+                            if (bookISBN.number_of_pages === undefined){
+                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + data[isbnKey].pagination + "</td></tr>";
+                            }else if (bookISBN.pagination === undefined){
+                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
+                            }else{
+                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + 0 + "</td></tr>";
+                            }
+                            pageNumber.append(rowHTML);
+
+                            calculateTimeframe(totalNumberOfPages);
                         });
                     console.log(apiUrl)
                 }
@@ -138,33 +134,11 @@ $(document).ready(function () {  // only begin once page has loaded
                         + '<p>1 day: '+ hrPerDayList[hrPerDayList.length-7] + ' hrs </p>'
                     );
                 }
-                // Switch keywords for number page value
-                function switchValues(bookISBN){
-                    if (bookISBN.number_of_pages === undefined){
-                        console.log("It went through");
-                        return bookISBN.pagination;
-                    }else if (bookISBN.pagination === undefined){
-                        return bookISBN.number_of_pages;
-                    }else{
-                        return 0;
-                    }
-                }
-                // get ISBN from url
-                function checkISBN(selectedURL){
-                    if(selectedURL.includes("ISBN")){
-                        
-                        var isbnNum = document.createElement('h3');
-                        isbnNum.textContent = "Inside checkISBN: " + selectedURL.substring(42,60);
-                        pageNumber.appendChild(isbnNum);
-                    }
-                };
+
                 getPageNumber();
-                //checkISBN(apiUrl);
                 console.log(isbnKey);
             },
             minLength: 5 // set minimum length of text the user must enter
-
         });
-    });
-
-
+    });  
+   
