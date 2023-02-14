@@ -73,7 +73,9 @@ $(document).ready(function () {  // only begin once page has loaded
                             var pageNumber = $('#page-number');
                             var bookISBN = data[isbnKey];
 
-                            if (bookISBN.number_of_pages === undefined){
+                            if (bookISBN.number_of_pages === undefined && bookISBN.pagination === undefined){
+                                rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + 0 + "</td></tr>";
+                            }else if(bookISBN.number_of_pages === undefined){
                                 rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + data[isbnKey].pagination + "</td></tr>";
                             }else if (bookISBN.pagination === undefined){
                                 rowHTML = "<tr><td>" + data[isbnKey].title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
