@@ -81,6 +81,10 @@ $(document).ready(function () {  // only begin once page has loaded
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
+                    
+                    // Unused Feature 
+                    //listofBooksPages.push(ui.item.pages);
+                    //calculateTimeframe(listofBooksPages);
                 }
                 
                 function calculateTimeframe(pageList){
@@ -141,7 +145,8 @@ $(document).ready(function () {  // only begin once page has loaded
     });  
     // Bryan's
     function getpokemonImage() {
-        fetch('https://pokeapi.co/api/v2/pokemon/ditto').then((response) => response.json()).then((data) => {
+        var pokeDex = String(Math.floor(Math.random() * 808));
+        fetch('https://pokeapi.co/api/v2/pokemon/'+pokeDex+'/').then((response) => response.json()).then((data) => {
             console.log(data);
             var pokeimage = document.createElement('img');
             pokeimage.src = data.sprites.front_default;
