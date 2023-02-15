@@ -82,17 +82,18 @@ $(document).ready(function () {  // only begin once page has loaded
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
+                    getpokemonImage();
+                    //calculateTimeframe(totalNumberOfPages);
+                    // fetch(apiUrl)
                     
-                    fetch(apiUrl)
-                    
-                    .then(function(response){
-                        return response.json();
-                        })
-                        .then(function(data){
-                            getpokemonImage(); //Bryan's 
+                    // .then(function(response){
+                    //     return response.json();
+                    //     })
+                    //     .then(function(data){
+                    //         getpokemonImage(); //Bryan's 
                             
-                            //calculateTimeframe(totalNumberOfPages);
-                        });
+                    //         
+                    //     });
                     console.log(apiUrl)
                 }
                 
@@ -140,8 +141,8 @@ $(document).ready(function () {  // only begin once page has loaded
 
                 getPageNumber();
 
-                var bookText = ui.item.title + numberOfPages;
-                //var bookText = bookTitle + numberOfPages;
+                var bookText = ui.item.title + ui.item.pages;
+                
                 console.log(bookText)
                 books.push(bookText);
                 
@@ -152,7 +153,7 @@ $(document).ready(function () {  // only begin once page has loaded
             minLength: 5 // set minimum length of text the user must enter
         });
     });  
-
+    // Bryan's
     function getpokemonImage() {
         fetch('https://pokeapi.co/api/v2/pokemon/ditto').then((response) => response.json()).then((data) => {
             console.log(data);
