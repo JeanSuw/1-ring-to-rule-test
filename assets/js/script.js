@@ -171,37 +171,11 @@ $(document).ready(function () {  // only begin once page has loaded
 
             var li = document.createElement("page-number");
             
-            li.setAttribute("data-index", i);
-            pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>");
+            //li.setAttribute("data-index", i);
+            $('#page-number').append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>");
         }
     }
-    // function renderBooks() {
-    //     // Clear bookList element and update bookCountSpan
-    //     //bookList.innerHTML = "";
-    //     if (books.length === null ){ 
-    //         // if caught the errors, set bookCountSpan.textContent to 0 
-    //         bookCountSpan.textContent = 0;
-    //     }else{
-    //         console.log("check length: " + books.length);
-    //         bookCountSpan.textContent = books.length;
-    //     }
-        
-      
-    //     // Render a new li for each book
-    //     for (var i = 0; i < books.length; i++) {
-    //       var book = books[i].btitle;
-      
-    //       var li = document.createElement("li");
-    //       li.textContent = book;
-    //       li.setAttribute("data-index", i);
-      
-    //       var button = document.createElement("button");
-    //       button.textContent = "Delete ❌";
-      
-    //       li.appendChild(button);
-    //       bookList.appendChild(li);
-    //     }
-    // }
+    
     // Calls init to retrieve data and render it to the page on load
     init()
     // Add click event to bookList element
