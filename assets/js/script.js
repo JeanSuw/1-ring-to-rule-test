@@ -81,7 +81,7 @@ $(document).ready(function () {  // only begin once page has loaded
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
-                    
+
                     // Unused Feature 
                     //listofBooksPages.push(ui.item.pages);
                     //calculateTimeframe(listofBooksPages);
@@ -131,13 +131,17 @@ $(document).ready(function () {  // only begin once page has loaded
 
                 getPageNumber();
 
-                var bookText = ui.item.title + ui.item.pages;
-                
-                console.log(bookText)
+                //var bookText = ui.item.title + ui.item.pages;
+                var bookText = {
+                    btitle: ui.item.title,
+                    bPage: ui.item.pages
+                };
+                console.log(bookText);
+                console.log(books);
                 books.push(bookText);
                 
                 storeBooks();
-                //renderBooks();
+                renderBooks();
                 // isbnNum.textContent = "Inside checkISBN: " + selectedURL.substring(42,60);
             },
             minLength: 5 // set minimum length of text the user must enter
@@ -160,45 +164,64 @@ $(document).ready(function () {  // only begin once page has loaded
             console.log('pokemon not found', err);
         })
     }
-
-    function renderBooks() {
-        // Clear bookList element and update bookCountSpan
-        bookList.innerHTML = "";
-        if (books.length === null ){ 
-            // if caught the errors, set bookCountSpan.textContent to 0 
-            bookCountSpan.textContent = 0;
-        }else{
-            console.log("check length" + books.length);
-            bookCountSpan.textContent = books.length;
-        }
-        
-      
-        // Render a new li for each book
+    function renderBooks(){
         for (var i = 0; i < books.length; i++) {
-          var book = books[i];
-      
-          var li = document.createElement("li");
-          li.textContent = book;
-          li.setAttribute("data-index", i);
-      
-          var button = document.createElement("button");
-          button.textContent = "Delete ❌";
-      
-          li.appendChild(button);
-          bookList.appendChild(li);
+            var book = books[i].btitle;
+            var pageHistory = books[i].bPage;
+            
+            var li = document.createElement("page-number");
+            //li.textContent = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
+            //lineHistory = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
+            li.setAttribute("data-index", i);
+            
+            var button = document.createElement("button");
+            button.textContent = "Delete ❌";
+
+            li.appendChild(button);
+            pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>"+button);
+            
         }
     }
+    // function renderBooks() {
+    //     // Clear bookList element and update bookCountSpan
+    //     //bookList.innerHTML = "";
+    //     if (books.length === null ){ 
+    //         // if caught the errors, set bookCountSpan.textContent to 0 
+    //         bookCountSpan.textContent = 0;
+    //     }else{
+    //         console.log("check length: " + books.length);
+    //         bookCountSpan.textContent = books.length;
+    //     }
+        
+      
+    //     // Render a new li for each book
+    //     for (var i = 0; i < books.length; i++) {
+    //       var book = books[i].btitle;
+      
+    //       var li = document.createElement("li");
+    //       li.textContent = book;
+    //       li.setAttribute("data-index", i);
+      
+    //       var button = document.createElement("button");
+    //       button.textContent = "Delete ❌";
+      
+    //       li.appendChild(button);
+    //       bookList.appendChild(li);
+    //     }
+    // }
     // Calls init to retrieve data and render it to the page on load
     init()
     // Add click event to bookList element
     function init() {
         // Get stored books from localStorage
-      var storedBooks = JSON.parse(localStorage.getItem("books"));
-    
-      // If books were retrieved from localStorage, update the books array to it
-      if (storedBooks !== null) {
-          books = storedBooks;
-        }   
+        var storedBooks = JSON.parse(localStorage.getItem("books"));
+        
+        // If books were retrieved from localStorage, update the books array to it
+        if (storedBooks !== null) {
+            books = storedBooks;
+        }
+        console.log("inside books: " + books);
+        console.log("length " + books.length);
         renderBooks();
     }
 
@@ -217,6 +240,6 @@ $(document).ready(function () {  // only begin once page has loaded
           
           // Store updated books in localStorage, re-render the list
           storeBooks();
-          //renderBooks();
+          renderBooks();
         }
     });
