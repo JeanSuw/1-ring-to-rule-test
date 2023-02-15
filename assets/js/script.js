@@ -1,6 +1,7 @@
 // Darryll
 var bookInput = document.querySelector("#book-text");
-var bookList = document.querySelector("#book-list"); 
+//var bookList = document.querySelector("#book-list"); 
+var bookList = document.querySelector("#page-number");
 // The book-list id or class does not exist in html, where should we put it
 var bookCountSpan = document.querySelector("#book-count");
 var books = [];
@@ -153,8 +154,8 @@ $(document).ready(function () {  // only begin once page has loaded
 
                 getPageNumber();
 
-                //var bookText = ui.item.title + numberOfPages;
-                var bookText = bookTitle + numberOfPages;
+                var bookText = ui.item.title + numberOfPages;
+                //var bookText = bookTitle + numberOfPages;
                 console.log(bookText)
                 books.push(bookText);
                 
@@ -182,39 +183,39 @@ $(document).ready(function () {  // only begin once page has loaded
         })
     }
 
-    // function renderBooks() {
-    //     // Clear bookList element and update bookCountSpan
-    //     bookList.innerHTML = "";
-    //     bookCountSpan.textContent = books.length;
+    function renderBooks() {
+        // Clear bookList element and update bookCountSpan
+        bookList.innerHTML = "";
+        bookCountSpan.textContent = books.length;
       
-    //     // Render a new li for each book
-    //     for (var i = 0; i < books.length; i++) {
-    //       var book = books[i];
+        // Render a new li for each book
+        for (var i = 0; i < books.length; i++) {
+          var book = books[i];
       
-    //       var li = document.createElement("li");
-    //       li.textContent = book;
-    //       li.setAttribute("data-index", i);
+          var li = document.createElement("li");
+          li.textContent = book;
+          li.setAttribute("data-index", i);
       
-    //       var button = document.createElement("button");
-    //       button.textContent = "Delete ❌";
+          var button = document.createElement("button");
+          button.textContent = "Delete ❌";
       
-    //       li.appendChild(button);
-    //       bookList.appendChild(li);
-    //     }
-    // }
+          li.appendChild(button);
+          bookList.appendChild(li);
+        }
+    }
     // Calls init to retrieve data and render it to the page on load
-    //init()
+    init()
     // Add click event to bookList element
-    // function init() {
-    //     // Get stored books from localStorage
-    //   var storedBooks = JSON.parse(localStorage.getItem("books"));
+    function init() {
+        // Get stored books from localStorage
+      var storedBooks = JSON.parse(localStorage.getItem("books"));
     
-    //   // If books were retrieved from localStorage, update the books array to it
-    //   if (storedBooks !== null) {
-    //       books = storedBooks;
-    //     }   
-    //     renderBooks();
-    // }
+      // If books were retrieved from localStorage, update the books array to it
+      if (storedBooks !== null) {
+          books = storedBooks;
+        }   
+        renderBooks();
+    }
 
     function storeBooks() {
         // Stringify and set key in localStorage to books array
@@ -230,7 +231,7 @@ $(document).ready(function () {  // only begin once page has loaded
           books.splice(index, 1);
           
           // Store updated books in localStorage, re-render the list
-          //storeBooks();
+          storeBooks();
           //renderBooks();
         }
     });
