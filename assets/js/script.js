@@ -19,9 +19,6 @@ var readingSpeed = 30; // Total number of page per hour
 // book selection in search
 var selectedBook = $('#txtBookSearch');
 
-// https://openlibrary.org/api/books?bibkeys={ISBN:9780980200447}&jscmd=data&format=json
-// Must be "ISBN:00000000000000"
-
 $(document).ready(function () {  // only begin once page has loaded
     $("#txtBookSearch").autocomplete({ // attach auto-complete functionality to textbox
         // define source of the data
@@ -82,7 +79,6 @@ $(document).ready(function () {  // only begin once page has loaded
                     
                     // add from Jay's code
                     var pageNumber = $('#page-number');
-                    
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
@@ -152,8 +148,6 @@ $(document).ready(function () {  // only begin once page has loaded
                 storeBooks();
                 //renderBooks();
                 // isbnNum.textContent = "Inside checkISBN: " + selectedURL.substring(42,60);
-
-                console.log(isbnKey);
             },
             minLength: 5 // set minimum length of text the user must enter
         });
