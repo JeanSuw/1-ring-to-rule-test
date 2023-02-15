@@ -170,19 +170,9 @@ $(document).ready(function () {  // only begin once page has loaded
             var pageHistory = books[i].bPage;
 
             var li = document.createElement("page-number");
-            //li.textContent = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
-            //lineHistory = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
+            
             li.setAttribute("data-index", i);
-            
-            //var button = document.createElement("button");
-            //button.textContent = "Delete ❌";
-
-            
             pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>");
-            //var button = document.createElement("button");
-            //button.textContent = "Delete ❌";
-            //li.appendChild(button);
-            
         }
     }
     // function renderBooks() {
