@@ -10,8 +10,8 @@ var books = [];
 var pageNumber = $('#page-number');
 
 // totalNumberOfPages will be a concatonation of the book collection
-var totalNumberOfPages = [];
-var numberOfPages = 0; // assign new value when either number_of_Pages or Pagination is defined
+var totalNumberOfPages = 0;
+var listofBooksPages = []; // for calculateTimeframe
 var bookTitle = "";
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
@@ -73,17 +73,19 @@ $(document).ready(function () {  // only begin once page has loaded
                     $('#divDescription').append('<P><b>ISBN:</b> ' + ui.item.isbn[0].identifier + '</p>');
                     $('#divDescription').append('<a href="http://www.worldcat.org/isbn/' + ui.item.isbn[0].identifier + '" target="_blank">View item on worldcat</a>');
                 }
-                var isbnKey = "ISBN:"+ String(ui.item.isbn[0].identifier);
+                //var isbnKey = "ISBN:"+ String(ui.item.isbn[0].identifier);
                 var getPageNumber = function(){
-                    var apiUrl = "https://openlibrary.org/api/books?bibkeys="+isbnKey+"&jscmd=data&format=json";
-                    
                     // add from Jay's code
+                    getpokemonImage();
                     var pageNumber = $('#page-number');
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
-                    getpokemonImage();
-                    //calculateTimeframe(totalNumberOfPages);
+                    
+                    //listofBooksPages.push(ui.item.pages);
+                    //calculateTimeframe(listofBooksPages);
+
+                    //var apiUrl = "https://openlibrary.org/api/books?bibkeys="+isbnKey+"&jscmd=data&format=json";
                     // fetch(apiUrl)
                     
                     // .then(function(response){
@@ -94,7 +96,7 @@ $(document).ready(function () {  // only begin once page has loaded
                             
                     //         
                     //     });
-                    console.log(apiUrl)
+                    
                 }
                 
                 function calculateTimeframe(pageList){
@@ -161,7 +163,9 @@ $(document).ready(function () {  // only begin once page has loaded
             pokeimage.src = data.sprites.front_default;
             console.log (data.sprites.front_default);
             
-            document.querySelector("#pokemonImage").append(pokeimage)
+            
+            document.querySelector("#pokemonImage").append(pokeimage);
+            // document.querySelector("#page-number").append(pokeimage)
             
         }).catch((err) => {
             console.log('pokemon not found', err);
