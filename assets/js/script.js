@@ -168,17 +168,20 @@ $(document).ready(function () {  // only begin once page has loaded
         for (var i = 0; i < books.length; i++) {
             var book = books[i].btitle;
             var pageHistory = books[i].bPage;
-            
+
             var li = document.createElement("page-number");
             //li.textContent = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
             //lineHistory = "<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>";
             li.setAttribute("data-index", i);
             
-            var button = document.createElement("button");
-            button.textContent = "Delete ❌";
+            //var button = document.createElement("button");
+            //button.textContent = "Delete ❌";
 
-            li.appendChild(button);
+            
             pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>"+button);
+            //var button = document.createElement("button");
+            //button.textContent = "Delete ❌";
+            //li.appendChild(button);
             
         }
     }
