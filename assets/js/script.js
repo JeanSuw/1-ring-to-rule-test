@@ -1,7 +1,7 @@
 // Darryll
 var bookInput = document.querySelector("#book-text");
-//var bookList = document.querySelector("#book-list"); 
-var bookList = document.querySelector("#page-number");
+var bookList = document.querySelector("#book-list"); 
+//var bookList = document.querySelector("#page-number");
 // The book-list id or class does not exist in html, where should we put it
 var bookCountSpan = document.querySelector("#book-count");
 var books = [];
@@ -12,7 +12,7 @@ var pageNumber = $('#page-number');
 // totalNumberOfPages will be a concatonation of the book collection
 var totalNumberOfPages = [];
 var numberOfPages = 0; // assign new value when either number_of_Pages or Pagination is defined
-var bookTitle = 0;
+var bookTitle = "";
 // can be changed later to diffent speeds
 var readingSpeed = 30; // Total number of page per hour
  
@@ -33,6 +33,11 @@ $(document).ready(function () {  // only begin once page has loaded
                 dataType: "jsonp",
                 success: function(data) {
                     response($.map(data.items, function (item) {
+                        // add from Jay's code
+                        if (item.volumeInfo.title && item.volumeInfo.pageCount){
+                            totalNumberOfPages = item.volumeInfo.pageCount;
+                        }
+                        
                         if (item.volumeInfo.authors && item.volumeInfo.title && item.volumeInfo.industryIdentifiers && item.volumeInfo.publishedDate)
                         {
                             return {
@@ -47,6 +52,8 @@ $(document).ready(function () {  // only begin once page has loaded
                                 publishedDate: item.volumeInfo.publishedDate,
                                 image: (item.volumeInfo.imageLinks == null ? "" : item.volumeInfo.imageLinks.thumbnail),
                                 description: item.volumeInfo.description,
+                                // add from Jay's code
+                                pages: item.volumeInfo.pageCount,
                             };
                         }
                     }));
@@ -73,39 +80,22 @@ $(document).ready(function () {  // only begin once page has loaded
                 var getPageNumber = function(){
                     var apiUrl = "https://openlibrary.org/api/books?bibkeys="+isbnKey+"&jscmd=data&format=json";
                     
+                    // add from Jay's code
+                    var pageNumber = $('#page-number');
+                    
+                    var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
+                    console.log(rowHTML);
+                    pageNumber.html(pageNumber.html() + rowHTML);
+                    
                     fetch(apiUrl)
                     
                     .then(function(response){
                         return response.json();
                         })
                         .then(function(data){
-                            // Jay's and Jean's code fusion
-                            var rowHTML;
-                            var pageNumber = $('#page-number');
-                            var bookISBN = data[isbnKey];
-                            
-                            if (bookISBN.number_of_pages === undefined && bookISBN.pagination === undefined){
-                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
-                                numberOfPages = 0;
-                                bookTitle = bookISBN.title;
-                            }else if(bookISBN.number_of_pages === undefined){
-                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.pagination + "</td></tr>";
-                                numberOfPages = bookISBN.pagination;
-                                bookTitle = bookISBN.title;
-                            }else if (bookISBN.pagination === undefined){
-                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + bookISBN.number_of_pages + "</td></tr>";
-                                numberOfPages = bookISBN.number_of_pages;
-                                bookTitle = bookISBN.title;
-                            }else{
-                                rowHTML = "<tr><td>" + bookISBN.title + "</td><td>" + 0 + "</td></tr>";
-                                numberOfPages = 0;
-                                bookTitle = bookISBN.title;
-                            }
                             getpokemonImage(); //Bryan's 
-                            pageNumber.append(rowHTML);
                             
-                            
-                            calculateTimeframe(totalNumberOfPages);
+                            //calculateTimeframe(totalNumberOfPages);
                         });
                     console.log(apiUrl)
                 }
@@ -186,7 +176,14 @@ $(document).ready(function () {  // only begin once page has loaded
     function renderBooks() {
         // Clear bookList element and update bookCountSpan
         bookList.innerHTML = "";
-        bookCountSpan.textContent = books.length;
+        if (books.length === null ){ 
+            // if caught the errors, set bookCountSpan.textContent to 0 
+            bookCountSpan.textContent = 0;
+        }else{
+            console.log("check length" + books.length);
+            bookCountSpan.textContent = books.length;
+        }
+        
       
         // Render a new li for each book
         for (var i = 0; i < books.length; i++) {
