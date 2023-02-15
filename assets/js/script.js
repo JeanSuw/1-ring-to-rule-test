@@ -81,22 +81,6 @@ $(document).ready(function () {  // only begin once page has loaded
                     var rowHTML = "<tr><td>" + ui.item.title + "</td><td>" + ui.item.pages + "</td></tr>";
                     console.log(rowHTML);
                     pageNumber.html(pageNumber.html() + rowHTML);
-                    
-                    //listofBooksPages.push(ui.item.pages);
-                    //calculateTimeframe(listofBooksPages);
-
-                    //var apiUrl = "https://openlibrary.org/api/books?bibkeys="+isbnKey+"&jscmd=data&format=json";
-                    // fetch(apiUrl)
-                    
-                    // .then(function(response){
-                    //     return response.json();
-                    //     })
-                    //     .then(function(data){
-                    //         getpokemonImage(); //Bryan's 
-                            
-                    //         
-                    //     });
-                    
                 }
                 
                 function calculateTimeframe(pageList){
