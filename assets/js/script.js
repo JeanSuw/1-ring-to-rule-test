@@ -178,7 +178,7 @@ $(document).ready(function () {  // only begin once page has loaded
             //button.textContent = "Delete ❌";
 
             
-            pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>"+button);
+            pageNumber.append("<tr><td>" + book + "</td><td>" + pageHistory + "</td></tr>");
             //var button = document.createElement("button");
             //button.textContent = "Delete ❌";
             //li.appendChild(button);
