@@ -29,7 +29,17 @@ The power that's inside ♪
 
 <li> Github Repository Link: </li>
 
+My team Repo Link:
 https://github.com/btay786/1-project-to-rule
+
+My team Application Link:
+https://btay786.github.io/1-project-to-rule/
+
+My test repo for Bookworm
+https://github.com/JeanSuw/1-ring-to-rule-test
+
+My test website for Bookworm
+https://jeansuw.github.io/1-ring-to-rule-test/
 
 <li> Application Link: </li> 
 
